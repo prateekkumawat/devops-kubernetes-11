@@ -1,12 +1,15 @@
 step 1 : # selinux must be disable or permissive 
 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 https://kubernetes.io/docs/reference/networking/ports-and-protocols/
+https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
 setenforce 0 
 selinux file for disable/permissive -- /etc/selinux/config
 
 step 2 : Swap Must be disable 
 swapoff -a 
 check swap using  free -m 
+if swapoff command use comment your fstab entry also after reboot swap not run.
 
 Step 3 : Install Docker in machine 
 yum install docker -y 
@@ -28,6 +31,7 @@ modprobe overlay
 stpe 5 : containerd configure  ******* kubernetes will not run **********
 
 containerd config default > /etc/containerd/config.toml
+
 [root@ip-172-31-15-199 ec2-user]# vi /etc/containerd/config.toml
 do SystemCgroup = true 
 systemctl restart containerd 
