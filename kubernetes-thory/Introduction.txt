@@ -1,0 +1,47 @@
+kubenretes provide two variation :::: 
+- minikube :::: single machine setup of kubenretes uses for dev and test purpose for local env. 
+- cluster (k8s cluster) :::: multi host cluster setup used and prefer for production env. 
+
+course focused about CKA --- certified kubenretes Adminitration 
+
+minikube installation ::: 
+  Minimum kubernetes Requirements:::: 
+  - 2 CPUs or more
+  - 2GB of free memory
+  - 20GB of free disk space
+  - Internet connection
+  - Docker Desktop 
+
+# https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2Fwindows+package+manager   
+  - Windows ::: 
+      1. open your powershell as a Adminitrator 
+         - winget install Kubernetes.minikube 
+
+      2. kubectl is client command of kubenretes need to install. 
+          download you exe file in your system using below links 
+          https://kubernetes.io/releases/download/#binaries
+
+          after this put in any path as choice of kubectl.exe 
+           and setup env variables like we setup 
+
+kubernetes Key Component :::: 
+      essential components that make up a Kubernetes cluster up and working.
+      - kubernetes deployment of applications and whole architecture depends on that. 
+
+    kube-apiserver ::: kubernetes exposed and manage by kube api server. all the instructions provided by 
+                       client directly facing to api server. 
+    etcd ::: kubernetes all config data is stored by etcd in key value pattern. if any pod or resource failed etcd service trying to 
+             heal your failures. etcd database store for kubenretes. 
+    kube-schduler ::: schduler use to spin schduling algo for manage containres.assigns each Pod to a suitable node.
+
+    kubelet :::::: kubernetes daemon service 
+
+    controll-manager --- cloud-controll-manager ::  all services controll by this 
+
+    kube-proxy ---- network based connection between kubernetes nodes 
+
+    contol-plane and worker node                               
+
+    kubernetes is always running pods. pods are small compute unit in kubenretes that manage your containers. 
+    your containers in kubernetes running inside pods. pods are responsible to provide storage, network volumes
+    security and contexts that requrire to spin and manaitain containers. 
