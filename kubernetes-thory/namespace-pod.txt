@@ -1,0 +1,50 @@
+# namespace:::: 
+In Kubernetes, namespaces provide a mechanism for isolating groups of resources within a single cluster.
+ Names of resources need to be unique within a namespace, 
+ but not across namespaces. Namespace-based scoping is applicable 
+ only for namespaced objects (e.g. Deployments, Services, etc.) 
+ and not for cluster-wide objects (e.g. StorageClass, Nodes, PersistentVolumes, etc.).
+
+# kubectl get ns 
+# kubectl get pod    // default namespace pod show 
+# kubectl get pod -A  // all namespace 
+# kubectl get pod --all-namespaces   
+# kubectl get pod -n kube-system 
+# kubectl create ns testing 
+# kubectl delete ns testing
+
+# create a nginx pod  default namespace
+kubectl.exe run nginx --image=nginx:latest --port=80 
+
+# create a nginx pod in a depoy-app namespace 
+kubectl.exe run nginx --image=nginx:latest --port=80 -n deploy-app
+
+# check your both pod 
+kubectl get pod     // default namespace nginx pod
+kubectl get pod -n deploy-app    // deploy-app namespace nginx pod
+kubectl get pod -A    // all namespace pod shown 
+
+kubectl.exe get pod -A -o wide // show all details like pod ip , node on running etc.
+
+kubectl.exe get pod nginx -o  yaml // print pod yaml 
+
+kubectl.exe edit pod nginx  // edit if any change apply on running pod 
+
+kubectl.exe get pod nginx -o  yaml > first.yaml  // get your existing pod yaml
+
+kubectl.exe apply -f .\kubernetes-thory\first.yaml    \\ apply your yaml files
+
+kubectl.exe delete -f .\kubernetes-thory\first.yaml 
+
+# deploy nginx1 yaml in custom namespace 
+kubectl create ns custom 
+kubectl.exe apply -f .\kubernetes-thory\first.yaml --namespace=custom 
+         OR 
+edit first.yaml and replace namespace: default to namespace: custom then apply 
+kubectl.exe apply -f .\kubernetes-thory\first.yaml
+
+# check event and details of nginx1  pod
+kubectl.exe describe pod nginx1 -n custom 
+
+# check pod logs of nginx1 pod 
+kubectl.exe logs  nginx1 -n custom

@@ -4,3 +4,12 @@
 - Install Docker in this machine 
 - setup kubectl command setup in vm 
 - setup minikube in this vm.  
+
+29-10-2025 Task::: 
+
+- create a namespace app1 
+- crate a pod of nginx image in app1 namespace. 
+- crate a httpd image base pod in app1 namespace 
+- check the logs of nginx and httpd pods 
+- collect the yaml of nginx and httpd pod 
+- run this pod with app2 namespace with same configuration. 
