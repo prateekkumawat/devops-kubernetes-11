@@ -1,0 +1,17 @@
+- create a Dockerfile with nginx image that spin containent below 
+-   https://templatemo.com/download/templatemo_564_plot_listing
+- download this src create docker image and push to dockerhub 
+- then write pod yaml and svc and spin this on kubernets. 
+
+
+- create a Dockerfile with httpd image that spin containent below 
+-   https://templatemo.com/download/templatemo_559_zay_shop
+- download this src create docker image and push to dockerhub 
+- then write pod yaml and svc and spin this on kubernets. 
+
+
+- create a Dockerfile with redhat/ubi9 image that spin containent below 
+-   https://templatemo.com/download/templatemo_559_zay_shop
+- download this src 
+- create docker image that spin apache server in redhat image and push to dockerhub 
+- then write pod yaml and svc and spin this on kubernets.
