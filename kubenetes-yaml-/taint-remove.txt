@@ -1,0 +1,7 @@
+default master node have taint so remove that 
+
+# kubectl describe node | grep Taint
+
+kubectl taint node ip-172-31-35-148.ap-south-2.compute.internal node-role.kubernetes.io/control-plane:NoSchedule-
+
+mention node name of master to remove taint

@@ -1,0 +1,40 @@
+apiVersion: v1     -----> apiVersion depends on resource 
+kind: Pod          -----> kind type of resource namespace pod depoyment etc. 
+metadata:          -----> data information collection like labels name namespace 
+  name: myapp
+  labels:
+    app.kubernetes.io/name: myapp
+spec:              ------> resource specifications like container volumes and env details 
+  containers:      ------> containers details 
+  - name: myapp    
+    image: <Image>
+    resources:        ------> hardware uses max/min  cpu and ram
+      request: 
+         memory: "50Mi"
+         cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    command:
+      - sleep
+      - "3600"      
+    ports:                    -----> ports container port details 
+      - containerPort: <Port>
+# kubectl run myapp --image=test --port=80 --command -- sleep 3000 
+----
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: hello
+  namespace: default
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox
+            args: ['/bin/sh', '-c', 'date; echo Hello from the Kubernetes cluster']
+          restartPolicy: OnFailure
