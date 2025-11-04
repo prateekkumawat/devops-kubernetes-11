@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-app-deploy
+  namespace: mysql-app
+  labels:
+    app: mysql-app
+    apptype: database 
+spec:
+  selector:
+    matchLabels:
+      app: mysql-app
+      apptype: database
+  template:
+    metadata:
+      labels:
+        app: mysql-app
+        apptype: database
+    spec:
+      containers:
+      - name: mysql-app-deploy
+        image: mysql
+        env: 
+        - name: MYSQL_ROOT_PASSWORD
+          value: redhat123
+        - name: MYSQL_USER
+          value: dbuser
+        - name: MYSQL_PASSWORD 
+          value: flectrag 
+        resources:
+          requests: 
+            memory: "700Mi"
+            cpu: "500m"
+          limits:
+            memory: "128Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 3306
