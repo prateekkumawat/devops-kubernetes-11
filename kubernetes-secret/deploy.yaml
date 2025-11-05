@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-app-deploy
+  namespace: mysql-app
+  labels:
+    app: mysql-app
+    apptype: database 
+spec:
+  selector:
+    matchLabels:
+      app: mysql-app
+      apptype: database
+  template:
+    metadata:
+      labels:
+        app: mysql-app
+        apptype: database
+    spec:
+      containers:
+      - name: mysql-app-deploy
+        image: mysql
+        env: 
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-admin-secret
+              key: password
+        - name: MYSQL_USER
+          valueFrom: 
+            secretKeyRef:
+              name: app-user-secret
+              key: user
+        - name: MYSQL_PASSWORD 
+          valueFrom: 
+            secretKeyRef:
+              name: app-user-secret
+              key: password
+        resources:
+          requests: 
+            memory: "128Mi"
+            cpu: "500m"
+          limits:
+            memory: "700Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 3306

@@ -1,0 +1,16 @@
+# secret Introduction:::: 
+
+A Secret is an object that contains a small amount of sensitive data such as a password, 
+a token, or a key. Such information might otherwise be put in a Pod specification or in a container image. 
+Using a Secret means that you don't need to include confidential data in your application code.
+
+Secret support 3 type of security 
+- Docker Registry - docker login details 
+- TLS        - if you secure certs data 
+- Generic    - any type of user password key and token details 
+
+kubectl create secret secret-name generic  literles-values
+
+echo -n "flectrag" | base64    ---> kubernetes used encrypt data
+
+echo -n "encryptstring" | base64 -d 
