@@ -30,3 +30,35 @@ spec:
               key: password    
         ports:
         - containerPort: 5432
+
+---
+# test pod yaml manifest 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-test
+  namespace: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres-test
+  template:
+    metadata:
+      labels:
+        app: postgres-test
+    spec:
+      containers:
+      - name: postgres-test
+        image: ubuntu:latest
+        resources:
+          requests: 
+            memory: "500Mi"
+            cpu: "500m"        
+          limits:
+            memory: "1000Mi"
+            cpu: "1000m"
+        command:
+          - sleep
+          - "3600"    
+        ports:
+        - containerPort: 80
