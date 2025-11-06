@@ -24,7 +24,7 @@ spec:
             cpu: "1000m"
         env: 
         - name: POSTGRES_PASSWORD
-          valueForm: 
+          valueFrom: 
             secretKeyRef: 
               name: postgres-app-secret 
               key: password    
