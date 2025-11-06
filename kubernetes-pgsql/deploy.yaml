@@ -25,7 +25,7 @@ spec:
         env: 
         - name: POSTGRES_PASSWORD
           valueForm: 
-            secretKeyref: 
+            secretKeyRef: 
               name: postgres-app-secret 
               key: password    
         ports:
