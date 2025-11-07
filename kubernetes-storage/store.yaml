@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nfsmount 
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfsmount-data-pv
+  labels:
+    app: nfsstore
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /storage
+    server: 172.31.11.245
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfsmount-data-vol0
+  namespace: nfsmount
+  labels:
+    app: nfsstore
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nfsstore-pod
+  namespace: nfsmount
+  labels:
+    app: nfsstore
+spec:
+  volumes:
+  - name: optstore
+    persistentVolumeClaim:
+      claimName: nfsmount-data-vol0
+  containers:
+  - name: nfsstore-pod
+    image: ubuntu:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+    volumeMounts:
+    - name: optstore
+      mountPath: /opt  
