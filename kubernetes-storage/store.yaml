@@ -60,6 +60,9 @@ spec:
         cpu: "500m"
     ports:
       - containerPort: 80
+    command:
+      - sleep
+      - "3600"  
     volumeMounts:
     - name: optstore
       mountPath: /opt  
