@@ -1,0 +1,124 @@
+# define your namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: storage 
+
+# define your persistenet-volume.yaml
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-data-pv
+  labels:
+    app: nfsstore
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /mydata/mysql
+    server: 172.31.11.245
+
+# define your persistenet-volume-claim.yaml
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-data-vol0
+  namespace: storage
+  labels:
+    app: nfsstore
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+# define your mysql-secret.yaml #dbuser #flectrag
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-user-secret
+  namespace: storage
+type: Opaque
+data:
+  user: ZGJ1c2Vy
+  password: ZmxlY3RyYWc=
+
+# define mysql-deployment.yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-datastore
+  namespace: storage
+  labels:
+    app: nfsstore
+    apptype: database 
+spec:
+  selector:
+    matchLabels:
+      app: nfsstore
+      apptype: database
+  template:
+    metadata:
+      labels:
+        app: nfsstore
+        apptype: database
+    spec:
+      volumes:
+      - name: mysqldata
+        persistentVolumeClaim:
+          claimName: mysql-data-vol0
+      containers:
+      - name: mysql-datastore
+        image: mysql
+        env: 
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-user-secret
+              key: password
+        - name: MYSQL_USER
+          valueFrom: 
+            secretKeyRef:
+              name: mysql-user-secret
+              key: user
+        - name: MYSQL_PASSWORD 
+          valueFrom: 
+            secretKeyRef:
+              name: mysql-user-secret
+              key: password
+        resources:
+          requests: 
+            memory: "128Mi"
+            cpu: "500m"
+          limits:
+            memory: "700Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name:  mysqldata
+          mountPath: /var/lib/mysql/
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysqldatastore-svc
+  namespace: storage
+spec:
+  selector:
+    app: nfsstore
+  ports:
+  - port: 3306
+    targetPort: 3306
