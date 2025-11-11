@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: path-store 
+
+---
+# create persistent volumes for pod 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: path-store-data0
+  namespace: path-store
+spec:
+  resources:
+    requests:
+      storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path  
+
+---
+# create pod for testing
+apiVersion: v1
+kind: Pod
+metadata:
+  name: path-store-pod
+  namespace: path-store
+  labels:
+    app.kubernetes.io/name: local-path
+spec:
+  containers:
+  - name: path-store-pod
+    image: ubuntu:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    command:
+      - sleep
+      - "3600"
+    volumeMounts:
+    - name: os-mouth-path
+      mountPath: /opt
+  volumes:
+  - name: os-mouth-path
+    persistentVolumeClaim:
+      claimName: path-store-data0

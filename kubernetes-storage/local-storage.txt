@@ -1,0 +1,9 @@
+local-path-provisioner --- rancher 
+
+https://github.com/rancher/local-path-provisioner
+
+kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.32/deploy/local-path-storage.yaml
+
+
+/opt/ ----- datastore 
+node ---- on that machine local-path-provisioner pod running 
