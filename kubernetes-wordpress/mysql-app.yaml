@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wp-mysql
+  namespace: wordpress
+  labels:
+    app: wordpress-app
+    apptype: database
+spec:
+  selector:
+    matchLabels:
+      app: wordpress-app
+  template:
+    metadata:
+      labels:
+        app: wordpress-app
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:latest
+        resources:
+          requests: 
+             memory: "500Mi"
+             cpu: "400m"
+          limits:
+            memory: "1000Mi"
+            cpu: "800m"
+        ports:
+        - containerPort: 3306
+        env: 
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: admin-database-secret
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              key: user
+              name: admin-app-secret
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: admin-app-secret                    
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              key: dbdata
+              name: admin-info
+        volumeMounts:
+        - name: db-data-mount 
+          mountPath: /var/lib/mysql/        
+      volumes:
+      - name: db-data-mount
+        persistentVolumeClaim:
+          claimName: wp-database-vol0
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wp-mysql-svc
+  namespace: wordpress
+spec:
+  selector:
+    app: wordpress-app
+  type: ClusterIP  
+  ports:
+  - port: 3306
+    targetPort: 3306
