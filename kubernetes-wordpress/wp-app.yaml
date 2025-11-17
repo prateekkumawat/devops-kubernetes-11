@@ -50,7 +50,8 @@ spec:
           mountPath: /var/www/html
       volumes:
       - name: wp-data-mount
-        mountPath: wpapp-data-vol0
+        persistentVolumeClaim: 
+          claimName: wpapp-data-vol0
 
 ---
 apiVersion: v1
