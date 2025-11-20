@@ -77,3 +77,33 @@ spec:
             name: apple
             port: 
               number: 80          
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: common1-ingress
+  namespace: default  
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx 
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /pine
+        backend:
+          service:
+            name: pine
+            port: 
+              number: 80
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /apple
+        backend:
+          service:
+            name: apple
+            port: 
+              number: 80
