@@ -67,7 +67,8 @@ spec:
             name: pine
             port: 
               number: 80
-  - http:
+  - host: common-app.mgmt.ocelottraining.com
+    http:
       paths:
       - pathType: Prefix
         path: /apple
