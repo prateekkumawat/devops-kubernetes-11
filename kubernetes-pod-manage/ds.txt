@@ -1,0 +1,26 @@
+### Deamosets manage and use cases in Kubernetes ###
+
+A DaemonSet defines Pods that provide node-local facilities. 
+These might be fundamental to the operation of your cluster, 
+such as a networking helper tool, or be part of an add-on
+
+A DaemonSet ensures that all (or some) Nodes run a copy of a Pod. 
+As nodes are added to the cluster, Pods are added to them.
+As nodes are removed from the cluster, those Pods are garbage collected. 
+Deleting a DaemonSet will clean up the Pods it created.
+
+running a cluster storage daemon on every node
+running a logs collection daemon on every node
+running a node monitoring daemon on every node
+running a node networking daemon on every node
+
+currently: kube-proxy ; kube-flannel ( or any network related)
+storage: CSi Driver like rancher ebs nfs
+
+# kubectl get ds -A 
+
+### differance between deployment and daemonsetes 
+
+- deployment give application deployment and manage, rollout revison and history, replica manage 
+- ds used for specfic case like nework storage to ensure pod run on every node 
+- kube-proxy flannel csi driver 
