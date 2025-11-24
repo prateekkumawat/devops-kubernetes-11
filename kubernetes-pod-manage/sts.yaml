@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongoapp
+spec:
+  selector:
+    matchLabels:
+      app: mongoapp
+  serviceName: mongo-svc
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: mongoapp
+    spec:
+      containers:
+      - name: mongoapp
+        image: mongo:latest
+        env: 
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: mongouser 
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: flectrag123
+        ports:
+        - containerPort: 27017
+          name: mongoapp
+        volumeMounts:
+        - name: mongodata
+          mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: mongodata
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-svc
+  labels:
+    app: mongoapp
+spec:
+  ports:
+  - port: 27017
+    name: mongo
+  selector:
+    app: mongoapp
+  type: NodePort

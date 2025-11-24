@@ -5,3 +5,13 @@
 - deployment replica maintain
 - it is often used to guarantee the availability of a specified number of identical Pods
 -  Deployment is a higher-level concept that manages ReplicaSets and provides declarative updates to Pods along with a lot of other useful features.
+
+
+Statefulsets: 
+- Manages the deployment and scaling of a set of Pods, 
+  and provides guarantees about the ordering and uniqueness of these Pods.
+
+- Stable, unique network identifiers.
+- Databases (e.g., MySQL, PostgreSQL, MongoDB).
+Message queues (e.g., Kafka, RabbitMQ).
+- Applications with persistent state or a leader-follower architecture.
