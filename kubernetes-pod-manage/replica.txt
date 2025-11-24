@@ -1,0 +1,7 @@
+- A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. 
+- copy of pods create 
+- scaleability maintain 
+- esure 3 pods -4 pods .... needs according no of pods maintain 
+- deployment replica maintain
+- it is often used to guarantee the availability of a specified number of identical Pods
+-  Deployment is a higher-level concept that manages ReplicaSets and provides declarative updates to Pods along with a lot of other useful features.
