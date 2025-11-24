@@ -32,6 +32,7 @@ spec:
       name: mongodata
     spec:
       accessModes: [ "ReadWriteOnce" ]
+      storageClassName: nfs-storage-data
       resources:
         requests:
           storage: 1Gi
