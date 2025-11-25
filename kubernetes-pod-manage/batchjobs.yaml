@@ -7,7 +7,7 @@ spec:
   template:
     spec:
       containers:
-      - name: pi
-        image: perl
-        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      - name: hello-job
+        image: alpine:latest
+        command: ["sh", "-c", "while true; do echo 'Job is running...'; sleep 5; done"]
       restartPolicy: Never
