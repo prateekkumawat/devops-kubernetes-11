@@ -11,3 +11,24 @@ spec:
         image: alpine:latest
         command: ["sh", "-c", "end=$(($(date +%s) + 30)); while true; do echo 'Job is running...'; sleep 5; done; echo 'Job completed successfully.'"]
       restartPolicy: Never
+
+
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: myjob
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox:1.28
+            command:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
+          restartPolicy: OnFailure
