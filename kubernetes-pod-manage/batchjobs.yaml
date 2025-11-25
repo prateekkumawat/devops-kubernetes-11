@@ -9,5 +9,5 @@ spec:
       containers:
       - name: hello-job
         image: alpine:latest
-        command: ["sh", "-c", "while true; do echo 'Job is running...'; sleep 5; done"]
+        command: ["sh", "-c", "end=$(($(date +%s) + 30)); while true; do echo 'Job is running...'; sleep 5; done; echo 'Job completed successfully.'"]
       restartPolicy: Never
