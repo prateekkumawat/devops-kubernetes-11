@@ -38,4 +38,22 @@ spec:
   nodeSelector:
     pods_seclector_basis_app: webapp
 
-
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: appnode3
+  labels:
+    app.kubernetes.io/name: node3
+spec:
+  containers:
+  - name: appnode3
+    image: nginx:latest
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+  nodeSelector:
+    pods_seclector_basis_app: mgmt
