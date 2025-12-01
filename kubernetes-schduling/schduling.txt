@@ -1,0 +1,25 @@
+# NodeSelector:::
+- simplest way to assign pod to  node 
+- NodeSelector is working on basis of node label
+- Kubernetes only schedules the Pod onto nodes that have each of the labels you specify. 
+- Limitation: there is not logical based assign just simple based on label match deploy pod. 
+
+
+# affinity and Antiaffinity:::
+- Affinity and anti-affinity expand the types of constraints you can define.
+- affinity/anti-affinity language is more expressive. nodeSelector only selects nodes with all the specified labels.
+- Affinity/anti-affinity gives you more control over the selection logic.
+- There are two types of node affinity:
+   requiredDuringSchedulingIgnoredDuringExecution: The scheduler can't schedule the Pod unless the rule is met.
+   preferredDuringSchedulingIgnoredDuringExecution: The scheduler tries to find a node that meets the rule. If a matching node is not available, 
+   the scheduler still schedules the Pod.
+
+Taints are the opposite -- they allow a node to repel a set of pods.
+
+Tolerations are applied to pods. Tolerations allow the scheduler to schedule pods with matching taints.
+ Tolerations allow scheduling but don't guarantee scheduling
+
+ # kubectl label node ip-172-31-32-115.ap-south-2.compute.internal pods_seclector_basis_app=mgmt
+ # kubectl label node ip-172-31-32-117.ap-south-2.compute.internal pods_seclector_basis_app=webapp
+ # kubectl get node --show-label
+ 

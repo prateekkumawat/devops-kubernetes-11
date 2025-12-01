@@ -73,4 +73,4 @@ metadata:
 type: kubernetes.io/service-account-token  
 
 # kubectl get secret developer -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 -d
-#kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"} | base64 -d
+# kubectl get secret admin -n kubernetes-dashboard -o jsonpath={".data.token"} | base64 -d
