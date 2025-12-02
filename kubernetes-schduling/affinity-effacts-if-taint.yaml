@@ -15,14 +15,14 @@ spec:
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 30
+          - weight: 50
             preference:
               matchExpressions:
               - key: pods_seclector_basis_app
                 operator: In
                 values:
                 - mgmt
-          - weight: 70
+          - weight: 50
             preference:
               matchExpressions:
               - key: pods_seclector_basis_app
