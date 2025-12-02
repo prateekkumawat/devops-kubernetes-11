@@ -16,25 +16,25 @@ spec:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 30
-             preference:
-               matchExpressions:
-               - key: pods_seclector_basis_app
-                 operator: In
-                 values:
-                 - mgmt
+            preference:
+              matchExpressions:
+              - key: pods_seclector_basis_app
+                operator: In
+                values:
+                - mgmt
           - weight: 70
-              preference:
-                matchExpressions:
-                - key: pods_seclector_basis_app
-                  operator: In
-                  values:
-                  - webapp           
+            preference:
+              matchExpressions:
+              - key: pods_seclector_basis_app
+                operator: In
+                values:
+                - webapp           
       containers:
       - name: affinity-taint-toleration-deployment
         image: nginx:latest
         resources:
           limits:
-            memory: "400Mi"
+            memory: "200Mi"
             cpu: "300m"
         ports:
         - containerPort: 80
