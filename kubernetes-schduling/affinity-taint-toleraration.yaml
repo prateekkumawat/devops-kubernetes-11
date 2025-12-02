@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: affinity-taint-toleration-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: pods_seclector_basis_app
+                operator: In
+                values:
+                - mgmt
+                - webapp
+      containers:
+      - name: affinity-taint-toleration-deployment
+        image: nginx:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+      tolerations:
+      - key: "nodeuseage"
+        operator: "Equal"
+        value: "High"
+        effect: "NoSchedule"
