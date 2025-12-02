@@ -14,14 +14,21 @@ spec:
     spec:
       affinity:
         nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: pods_seclector_basis_app
-                operator: In
-                values:
-                - mgmt
-                - webapp
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 30
+             preference:
+               matchExpressions:
+               - key: pods_seclector_basis_app
+                 operator: In
+                 values:
+                 - mgmt
+          - weight: 70
+              preference:
+                matchExpressions:
+                - key: pods_seclector_basis_app
+                  operator: In
+                  values:
+                  - webapp           
       containers:
       - name: affinity-taint-toleration-deployment
         image: nginx:latest
